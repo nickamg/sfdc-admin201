@@ -15,6 +15,15 @@
     - [Lookups [Relaciones]](#Lookups-Relaciones)
     - [Lookup Filters [Filtrado de relaciones]](#Lookup-Filters-Filtrado-de-relaciones)
     - [Dependent Lookups [Lookups dependientes]](#Dependent-Lookups-Lookups-dependientes)
+    - [Custom Formula Fields [Campos fórmula personalizados]](#Custom-Formula-Fields-Campos-fórmula-personalizados)
+    - [Definir una Formula](#Definir-una-Formula)
+    - [Cross-Object Formulas [Fórmulas entre varios objetos]](#Cross-Object-Formulas-Fórmulas-entre-varios-objetos)
+    - [Page Layout [Diseño de página]](#Page-Layout-Diseño-de-página)
+    - [Page Layout Editor [Editor de diseño de página]](#Page-Layout-Editor-Editor-de-diseño-de-página)
+    - [Asignar un Page Layout [Diseño de página] a un Profile [Perfil]](#Asignar-un-Page-Layout-Diseño-de-página-a-un--Profile-Perfil])
+    - [Record Type [Tipo de registro]](#Record-Type-Tipo-de-registro)
+    - [Crear un Record Type [Tipo de registro]](#Crear-un-Record-Type-Tipo-de-registro)
+    - [Record Types [Tipos de registro] con Bussiness Processes [Procesos de negocio]](#Record-Types-Tipos-de-registro-con-Bussiness-Processes-Procesos-de-negocio)
 
 # 🧭 Planteamiento
 ## Fecha examen 
@@ -160,4 +169,73 @@ Un *Lookup Filter* puede referenciar:
 - Campos en registros directamente relacionados al *target object* [objeto objetivo]
 
 ## Dependent Lookups [Lookups dependientes]
-Utiliza un *lookup filter* [filtro de relación] que referencia otro campo en el mismo *object* [objeto] para crear una *dependent lookup* [relación de dependencia]. Por ejemplo, añade un *lookup filter*
+Utiliza un *lookup filter* [filtro de relación] que referencia otro campo en el mismo *object* [objeto] para crear una *dependent lookup* [relación de dependencia].
+
+## Custom Formula Fields [Campos fórmula personalizados]
+Los *custom formula fields* [campos fórmula personalizados] te permiten definir cálculos que referencian otros campos para mostrar  nuevos datos de tipo *numeric* [numérico], *text* [texto], *checkbox*, *currency* [moneda] o *date* [fecha] específicos a tus requerimientos de negocio.
+
+- Son **únicamente de lectura** y no se muestran a la hora de crear un nuevo registro (ya que son calculados y el usuario no puede introducirles un valor directamente)
+- Pueden referenciar campos en el mismo objeto, o en un *parent object* [objeto padre] o *lookup object* [objeto relacionado]
+- No puede referenciar *currency codes* [códigos de moneda], *description* [descripciones] o *custom long text area fields* [campos de texto largo personalizados], o *multi-select picklists* [menús desplegables de selección múltiple].
+- No son buscables, ni están disponibles para conversión de *leads* [clientes potenciales] o *data exports* [exportación de datos].
+
+## Definir una Formula
+Puedes definir una *formula* a través de de un paso adicional en el *custom field wizard* [la guía de creación de un campo personalizado].
+
+## Cross-Object Formulas [Fórmulas entre varios objetos]
+Una *cross-object formula* [fórmula entre varios objetos] referencia campos de *parent objects* [objetos padre]. Utiliza la *Insert Field Browser* [insertar buscador de campos] en la *Advanced Formula Tab* [pestaña de fórmula avanzada] para acceder a campos de hasta 10 padres relacionados.
+
+## Page Layout [Diseño de página]
+Una *page layout* [diseño de página] controla los *fields* [campos], *sections* [secciones], *related lists* [listas relacionadas] y *buttons* [botones] que aparecen cuando los usuarios ven o editan un registro. Puedes modificar la *default page layout* [diseño de página por defecto] de un objeto o crear nuevas *page layouts*.
+
+```
+Setup | Customize | Name of Object | Page Layouts
+```
+
+## Page Layout Editor [Editor de diseño de página]
+Modifica o crea *page layouts* [diseños de página] utilizando el editor *drag-and-drop* [arrastra y suelta (editor mediante clicks y no código)].
+
+```
+Setup | Customize | Name of Object | Page Layouts
+```
+
+## Asignar un Page Layout [Diseño de página] a un Profile [Perfil]
+Para asegurar que los usuarios ven la *page layout* [diseño de página] correcta, asigna *page layouts* a *user profiles* [perfiles de usuario].
+
+## Record Type [Tipo de registro]
+Los *record types* [tipos de registro] te permiten ofrecer a los usuarios diferentes *page layouts* [diseños de página] y *pìcklist values* [valores en menús desplegables] para distintos tipos de escenarios comerciales basándose en sus *profiles* [perfiles]. 
+
+Por ejemplo, si tenemos un negocio que vende a fruterías y carnicerías, donde cada frutería y carnicería es una Account, necesitamos campos específicos para cada tipo de Account, dependiendo de si es frutería o carnicería. Para ello crearíamos dos *record types* [tipos de registro] en el objeto Account, uno para fruterías y otro para carnicerías.
+
+Cada objeto tiene un *default master record type* [tipo de registro maestro por defecto], pero siempre puedes crear nuevos.
+
+## Crear un Record Type [Tipo de registro]
+Puedes crear un nuevo *record type* [tipo de registro] en unos pocos pasos. Empieza por crear la *page layout* [diseño de página] que los usuarios verán cuando trabajen con el *record type* que vas a crear, y comprueba que las *picklists* [menús desplegables] tienen todos los valores requeridos.
+
+El proceso es el siguiente:
+1. Preparación:
+    - Crear la *page layout* [diseño de página]
+    - Asegurar que los valores de las *picklists* [menús desplegables] están rellenos
+2. Crear el *record type* [tipo de registro]:
+    - Paso 1:
+        - *Name* [Nombre]
+        - *Description* [Descripción]
+        - *Assign to profiles* [Asignación a perfiles]
+    - Paso 2:
+        - Selecciona el *page layout* [diseño de página] para cada *profile* [perfil]
+3. Editar las *picklists* [menús desplegables]:
+    - Selecciona los valores de las *picklists* [menús desplegables]
+
+```
+Setup | Customize | Name of Object | Record Types
+```
+
+## Record Types [Tipos de registro] con Bussiness Processes [Procesos de negocio]
+*Opportunities* [oportunidades], *cases* [casos], *solutions* [soluciones], y *leads* [clientes potenciales], tienen cada uno un *special picklist field* [campo menú desplegable especial], llamado *bussiness process* [proceso de negocio] que te permite definir etapas para cada uno de estos objetos. 
+
+De este modo puedes definir que un *case* [caso] tenga el siguiente *bussiness process* [proceso de negocio]:
+> Nuevo &rarr; Revisado &rarr; Cliente contactado &rarr; Esperando respuesta &rarr; Caso cerrado
+
+Puedes crear nuevas versiones para utilizar en los distintos *record types* [tipos de registro] para que representen mejor distintos escenarios de negocio.
+
+> ⚠ Debes crear al menos un *bussiness process* [proceso de negocio] antes de que puedas crar un *record type* [tipo de registro] para los objetos anteriormente mencionados.
