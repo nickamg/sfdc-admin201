@@ -24,6 +24,16 @@
     - [Record Type [Tipo de registro]](#Record-Type-Tipo-de-registro)
     - [Crear un Record Type [Tipo de registro]](#Crear-un-Record-Type-Tipo-de-registro)
     - [Record Types [Tipos de registro] con Bussiness Processes [Procesos de negocio]](#Record-Types-Tipos-de-registro-con-Bussiness-Processes-Procesos-de-negocio)
+    - [Crear un Bussiness Process [Proceso de negocio]](#Crear-un-Bussiness-Process-Proceso-de-negocio)
+    - [Usar History Tracking [Seguimiento histórico] para mantener Data Quality [Calidad del dato]](#Usar-History-Tracking-Seguimiento-histórico-para-mantener-Data-Quality-Calidad-del-dato)
+    - [Usar Data Validation [Validación de datos] para mantener Data Quality [Calidad del dato]](#Usar-Data-Validation-Validación-de-datos-para-mantener-Data-Quality-Calidad-del-dato)
+    - [Data Validation [Validación de Datos]: Required Fields [Campos Requeridos] y Unique Fields [Campos Únicos]](#Data-Validation-Validación-de-Datos:-Required-Fields-Campos-Requeridos-y-Unique-Fields-Campos-Únicos)
+    - [Custom Data Validation [Validación de datos personalizada]: Validation Rules [Reglas de validación]](#Custom-Data-Validation-Validación-de-datos-personalizada:-Validation-Rules-Reglas-de-validación)
+    - [Metodología de diseño de Validation Rules [Reglas de validación]](#Metodología-de-diseño-de-Validation-Rules-Reglas-de-validación)
+    - [Relaciones Master-Detail [Maestro-Esclavo]](#Relaciones-Master-Detail-Maestro-Esclavo)
+    - [Lookup Relationship [Relación Lookup] y Master Detail relationship [Relación maestro esclavo]](#Lookup-Relationship-Relación-Lookup-y-Master-Detail-relationship-Relación-maestro-esclavo)
+    - [Many-to-Many Relationship [Relación Muchos-a-Muchos]](#Many-to-Many-Relationship-Relación-Muchos-a-Muchos)
+    - [Revisión del Modelo de Datos](#Revisión-del-Modelo-de-Datos)
 
 # 🧭 Planteamiento
 ## Fecha examen 
@@ -193,7 +203,7 @@ Setup | Customize | Name of Object | Page Layouts
 ```
 
 ## Page Layout Editor [Editor de diseño de página]
-Modifica o crea *page layouts* [diseños de página] utilizando el editor *drag-and-drop* [arrastra y suelta (editor mediante clicks y no código)].
+Modifica o crea *page layouts* [diseños de página] utilizando el editor *drag-and-drop* [arrastra-y-suelta (editor mediante clicks y no código)].
 
 ```
 Setup | Customize | Name of Object | Page Layouts
@@ -239,3 +249,116 @@ De este modo puedes definir que un *case* [caso] tenga el siguiente *bussiness p
 Puedes crear nuevas versiones para utilizar en los distintos *record types* [tipos de registro] para que representen mejor distintos escenarios de negocio.
 
 > ⚠ Debes crear al menos un *bussiness process* [proceso de negocio] antes de que puedas crar un *record type* [tipo de registro] para los objetos anteriormente mencionados.
+
+## Crear un Bussiness Process [Proceso de negocio]
+Debes definir tus *bussiness processes* [procesos de negocio] requeridos antes de crear *record types* [tipos de registro] para *opportunities* [oportunidades], *cases* [casos], *solutions* [soluciones] o *leads* [clientes potenciales]. Es entonces cuando puedes seleccionar el *bussiness process* [proceso de negocio] creado a la hora de crear el *record type* [tipo de registro].
+
+Los pasos son los siguientes:
+1. Actualizar la *master picklist* [el menú desplegable maestro]
+    - Asegúrate de que tiene todos los valores requeridos
+2. Crear el *bussiness process* [proceso de negocio]:
+    - *Name* [Nombre]
+    - *Description* [Descripción]
+    - Selecciona valores de la *master picklist* [menú desplegable maestro]
+3. Crea el *record type* [tipo de registro]
+    - Selecciona el *bussiness process* [proceso de negocio] que has creado
+
+```
+Setup | Customize | Name of Object | Name of Process
+```
+
+## Usar History Tracking [Seguimiento histórico] para mantener Data Quality [Calidad del dato]
+Se puede activar *history tracking* [seguimiento histórico] en un objeto para seguir los cambios de hasta 20 *standard fields* [campos estándar] o *custom fields* [campos personalizados]. Los cambios se pueden ver en la *history related list* [lista relacionada del histórico] o a través de *history reports* [reportes del histórico].
+
+Por cada campo, el *tracking* [seguimiento] registra:
+- Fecha y hora del cambio
+- El *user* [usuario] que ha realizado el cambio
+- El valor antiguo y el nuevo (aunque no lo registra en *multi-select picklists* [menús desplegables multi selección] ni en *large text fields* [campos de texto largos])
+
+## Usar Data Validation [Validación de datos] para mantener Data Quality [Calidad del dato]
+La *data validation* [validación de datos] te permite asegurar la integridad de los datos **antes de que se guarden**, impidiendo a los *users* [usuarios] que introduzcan valores no válidos.
+
+Hay dos tipos:
+- *Standard data validation* [validación de datos estándar]: consiste en configurar propiedades simples en el campo para asegurar que se introducen datos válidos.
+    - *Field data type* [Tipo de dato del campo]: especificar de qué tipo es el campo (texto, numérico, etc.)
+    - *Required field* [Campo requerido]: especificar si es requerido
+    - *Unique field* [Campo único]: especifica si el valor del campo ha de ser único
+- *Custom validation rules* [validación de datos personalizada]: te permite configurar condiciones más complejas, que involucren uno o más campos.
+
+> ⚠ Las *custom validation rules* [reglas de validación personalizadas] sólo se ejecutna si no hay errores en las *standard validations* [validaciones estándar]
+
+## Data Validation [Validación de Datos]: Required Fields [Campos Requeridos] y Unique Fields [Campos Únicos]
+Ciertos *custom fields* [campos personalizados] pueden ser marcados como *required* [requeridos] y/o *unique* [únicos] para forzar a los usuarios a introducir siempre un valor, o evitar que existan registros con valores duplicados.
+
+- *Required* [Requeridos]:
+    - Es obligatorio que estén rellenos a la hora de guardar
+    - **Se añaden automáticamente a todas las *page layouts* [diseños de página]**
+    - No se pueden ocultar
+    - Accesible a todos los *profiles* [perfiles]
+    - No se puede marcar como *required* [requerido] un campo *picklist* [menú desplegable] ni *long text area* [campo de texto largo]
+- *Unique* [Único]:
+    - No permite guardar valores duplicados
+    - Los duplicados que existan causan error
+    - Sólo se puede aplicar a campos con los siguientes *data type* [tipos de dato]:
+        - *Email*
+        - *Number* [Numérico]
+        - *Text* [Texto]
+
+## Custom Data Validation [Validación de datos personalizada]: Validation Rules [Reglas de validación]
+Una *validation rule* [regla de validación] te permite especificar tus propios criterios de validación para prevenir que los *users* [usuarios] introduzcan datos no válidos en uno o más campos.
+
+Por ejemplo, se establece que un campo descuento en el objeto *Opportunity* [Oportunidad] no debería exceder el 20%. Si un usuario intenta introducir un valor mayor, se le impedirá.
+
+```
+Setup | Customization | Name of Object | Validation Rules
+```
+
+## Metodología de diseño de Validation Rules [Reglas de validación]
+Sigue un proceso consistente para asegurar que tienes reglas bien diseñadas:
+1. Indica tus requerimientos de negocio de una forma descriptiva &rarr; El usuario ha de introducir una *Fecha de Finalización del Período de Garantía* cuando el campo *Tiene Garantía* está seleccionado
+2. Descompón la descripción en una o más frases simples que describan los errores de validación &rarr; El usuario no debe ser capaz de guardar la *opportunity* [oportunidad] si:
+    - El campo *Tiene garantía* está seleccionado
+    - El campo *Fecha de Finalización del Período de Garantía* está en blanco
+3. Expresa la condición del error como un booleano utilizando el lenguaje de fórmula:
+    ```
+    Tiene_Garantia__c = True && ISBLANK(Fecha_Finalizacion_Periodo_Garantia__c)
+    ```
+4. Genera un mensaje de error que responda a esta *error condition* [condición de error] &rarr; "La Fecha de Finalización del Período de Garantía ha de introducirse cuando una cuenta tiene una garantía."
+
+## Relaciones Master Detail [Maestro Esclavo]
+- Este tipo de relaciones relacionan estrechamente objetos, de tal modo que el *master record* [registro maestro] controla ciertos comportamientos de *detail record* [registro esclavo]. Cuando un *master record* [registro maestro] es eliminado, el *detail record* [registro esclavo] relacionado se elimina también.
+- El campo *Owner* [Propietario] en el *detail record* [registro esclavo] no está disponible y se asocia automáticamente al *owner* [propietario] del *master record* [registro maestro]. Los *custom objects* [objetos personalizados] que sean *detail* [esclavos] en una relación *master-detail* [maestro-esclavo] no pueden tener *sharing rules* [reglas de compartir], *manual sharing* [compartir de forma manual], o *queues* [colas de espera], ya que estas requieren el campo *Owner* [Propietario].
+- Las configuraciones de seguridad del *master record* [registro maestro] controlan las del *detail record* [registro esclavo].
+- El campo *master-detail relationsihip* [relación maestro-esclavo] (el cual es el que une ambos objetos) se requiere en la *page layout* [diseño de página] del *detail record* [registro esclavo].
+- El *master object* [objeto maestro] puede ser un *standard object* [objeto estándar], como una *Account* [Cuenta] u *Opportunity* [Oportunidad], o un *custom object* [objeto personalizado].
+
+## Lookup Relationship [Relación Lookup] y Master Detail relationship [Relación Maestro Esclavo]
+Attributes [Atributos] | Lookup | Master Detail
+--- | :---: | :---:
+¿Se requiere el campo *Lookup* [Relación] en el registro hijo? | No | Sí
+¿Puede cambiarse el campo *Lookup* [Relación] del hijo? | Sí | No
+¿Qué pasa cuando el *parent record* [registro padre] se borra? | Los *child records* [registros hijo] no se borran | Los *child records* [registros hijo] se borran
+¿Puede el *parent record* [registro padre] tener *roll-up summary fields* [campos de sumario]? | No | Sí (hasta 10)
+¿Cuáles son las implicaciones en materia de seguridad? | Controlado por OWD | Reglas de compartir heredadas del padre
+¿Cuáles son las implicaciones a la hora del reporting? | Sólo están disponibles los campos del hijo | Todos los campos del padre y el hijo están disponibles.
+
+## Many-to-Many Relationship [Relación Muchos-a-Muchos]
+- Puedes utilizar una relación *master-detail* [maestro-esclavo] para modelar una relación *many-to-many* [muchos-a-muchos] entre dos *standard objects* [objetos estándar], dos *custom objects* [objetos personalizados], o un *custom object* [objeto personalizado] y un *standard object* [objeto estándar].
+- Una relación *many-to-many* [muchos-a-muchos] permite relacionar un registro de un objeto a múltiples registro de otro objeto y al revés.
+- Por ejemplo, puedes tener un *custom object* [objeto personalizado] llamado "Bug", que se relaciona con el objeto estándar *case* [caso], de tal forma que el objeto "Bug" puede relacionarse a múltiples casos, y un caso puede relacionarse con múltiples bugs.
+- Las relaciones *many-to-many* requieren un objeto intermedio. En este caso podría representarse del siguiente modo:
+    > Case &larr;&rarr; Objeto Intermedio &larr;&rarr; Bug
+
+# Revisión del Modelo de Datos
+- *Standard Fields* [Campos Estándar]
+- *Custom Fields* [Campos Personalizados]
+- *Picklists* [Menús desplegables]
+- Enlazar campos con *Dependent Picklists* [Menús Desplegables Dependientes]
+- Enlazar *Objects* [Objetos] mediante *Lookups* [Relaciones]
+- Formulas
+- Personalizar la representación de los datos:
+    - *Page Layout* [Diseño de página]
+    - *Record Type* [Tipo de registro]
+    - *Bussiness Process* [Proceso de negocio]
+- *Master-Detail Relationship* [Relación Maestro-Esclavo]
+- *Many-to-Many Relationship* [Relación Muchos-a-Muchos]
