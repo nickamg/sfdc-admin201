@@ -141,18 +141,23 @@ Eliminar un campo también resultará en la pérdida de datos. Como precaución,
 ## Crear un nuevo Custom Field
 - Hay cuatro pasos para crear nuevos campos en un objeto. La información necesaria para cada paso es diferente según el tipo de campo que estemos creando. Campos de tipo *Formula, Roll-Up-Summary y Lookup* tienen pasos adicionales.
 - Los pasos son los siguientes:
-    - Seleccionar el *Data Type* [Tipo de Dato]
+    1. Seleccionar el *Data Type* [Tipo de Dato]
         - Currency [Moneda]
         - Date [Fecha]
         - Checkbox
         - Picklist [Menú desplegable]
         - Text, etc [Texto, etc]
-    - Introducir los detalles
+    2. Introducir los detalles
         - Label [Etiqueta]
         - Length [Longitud]
         - Picklist values [Valores del desplegable]
         - Description [Descripción]
         - Help text [Texto de ayuda]
+    3. Configurar la *field-level security* [seguridad a nivel de campo]:
+        - Visibilidad por *profile* [perfil]
+        - Editabilidad por *profile* [perfil]
+    4. Añadir a *page layouts* [diseños de página]:
+        - Configurar en qué *page layouts* [diseños de página] aparece el campo
 
 ```
 Setup | Customize | Name of object | Fields | New
