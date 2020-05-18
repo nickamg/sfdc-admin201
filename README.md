@@ -4,7 +4,7 @@
     - [Estructura del examen](#Estructura-del-examen)
     - [Conceptos clave del programa](#Conceptos-clave-del-programa)
 2. [🏠 Salesforce Data Model](#🏠-Salesforce-Data-Model)
-    - [Standard Fields [Campos Estándar]](#Standard-Fields-[Campos-Estándar])
+    - [Standard Fields [Campos Estándar]](#Standard-Fields-Campos-Estándar)
     - [Cambiar Standard Field Labels [Etiquetas de Campos Estándar]](#Cambiar-Standard-Field-Labels-[Etiquetas-de-Campos-Estándar])
     - [Añadir Help Text [Texto de Ayuda] a un Standard Field](#Añadir-Help-Text-[Texto-de-Ayuda]-a-un-Standard-Field)
     - [Editar valores en Standard Piclist Fields [Campos Estándar de Menús Desplegables]](#Editar-valores-en-Standard-Piclist-Fields-[Campos-Estándar-de-Menús-Desplegables])
