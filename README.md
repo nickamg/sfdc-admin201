@@ -7,7 +7,7 @@
     - [Standard Fields [Campos Estándar]](#Standard-Fields-Campos-Estándar)
     - [Cambiar Standard Field Labels [Etiquetas de Campos Estándar]](#Cambiar-Standard-Field-Labels-Etiquetas-de-Campos-Estándar)
     - [Añadir Help Text [Texto de Ayuda] a un Standard Field](#Añadir-Help-Text-Texto-de-Ayuda-a-un-Standard-Field)
-    - [Editar valores en Standard Piclist Fields [Campos Estándar de Menús Desplegables]](#Editar-valores-en-Standard-Piclist-Fields-Campos-Estándar-de-Menús-Desplegables)
+    - [Editar valores en Standard Picklist Fields [Campos Estándar de Menús Desplegables]](#Editar-valores-en-Standard-Picklist-Fields-Campos-Estándar-de-Menús-Desplegables)
     - [Custom Fields [Campos personalizados]](#Custom-Fields-Campos-personalizados)
     - [Crear un nuevo Custom Field](#Crear-un-nuevo-Custom-Field)
     - [Picklists [Menús desplegables]](#Picklists-Menús-desplegables)
@@ -33,12 +33,19 @@
     - [Relaciones Master-Detail [Maestro-Esclavo]](#Relaciones-Master-Detail-Maestro-Esclavo)
     - [Lookup Relationship [Relación Lookup] y Master Detail relationship [Relación maestro esclavo]](#Lookup-Relationship-Relación-Lookup-y-Master-Detail-relationship-Relación-maestro-esclavo)
     - [Many-to-Many Relationship [Relación Muchos-a-Muchos]](#Many-to-Many-Relationship-Relación-Muchos-a-Muchos)
-    - [Revisión del Modelo de Datos](#Revisión-del-Modelo-de-Datos)
+    - [Repaso del Modelo de Datos](#Repaso-del-Modelo-de-Datos)
 3. [🚨 Modelo de Seguridad de Salesforce](#🚨-Modelo-de-Seguridad-de-Salesforce)
     - [Security Levels [Niveles de Seguridad]](#Security-Levels-Niveles-de-Seguridad)
     - [Users [Usuarios]](#Users-Usuarios)
     - [Crear nuevos Users [Usuarios]](#Crear-nuevos-Users-Usuarios)
     - [Desactivar un User [Usuario]](#Desactivar-un-User-Usuario)
+    - [Ver el User's Login History [Histórico de Login de un Usuario]](#Ver-el-Users-Login-History-Histórico-de-Login-de-un-Usuario)
+    - [Lidiar con un Invalid Password [Contraseña incorrecta]](#Lidiar-con-un-Invalid-Password-Contraseña-incorrecta)
+    - [Confirmar Security Setting [Configuraciones de Seguridad]](#Confirmar-Security-Setting-Configuraciones-de-Seguridad)
+    - [Profiles [Perfiles]](#Profiles-Perfiles)
+    - [Cómo cambia la experiencia de un usuario con un Profile [Perfil]](#Cómo-cambia-la-experiencia-de-un-usuario-con-un-Profile-Perfil)
+    - [Standard Profiles [Perfiles Estándar]](#Standard-Profiles-Perfiles-Estándar)
+    - [Standard Chatter Profiles [Perfiles Estándar de Chatter]](#Standard-Chatter-Profiles-Perfiles-Estándar-de-Chatter)
 
 # 🧭 Planteamiento
 ## Fecha examen 
@@ -108,7 +115,7 @@ La *Field-level help* [ayuda a nivel de campo] te permite mostrar información a
 Setup | Customize | Name of object | Fields | Edit
 ```
 
-## Editar valores en Standard Piclist Fields [Campos Estándar de Menús Desplegables]
+## Editar valores en Standard Picklist Fields [Campos Estándar de Menús Desplegables]
 Los *Standard picklist fields* [campos estándar de menús desplegables] contienen valores predefinidos, que puedes eliminar, añadir o reordenar.
 
 ```
@@ -354,7 +361,7 @@ Attributes [Atributos] | Lookup | Master Detail
 - Las relaciones *many-to-many* requieren un objeto intermedio. En este caso podría representarse del siguiente modo:
     > Case &larr;&rarr; Objeto Intermedio &larr;&rarr; Bug
 
-# Revisión del Modelo de Datos
+## Repaso del Modelo de Datos
 - *Standard Fields* [Campos Estándar]
 - *Custom Fields* [Campos Personalizados]
 - *Picklists* [Menús desplegables]
@@ -391,7 +398,7 @@ Attributes [Atributos] | Lookup | Master Detail
 ## Users [Usuarios]
 Un usuario es alguien con *login access* [acceso mediante login] a la *Salesforce organization* [la organización de Salesforce], que tiene una licencia y un *user record* [registro de usuario] que contiene información acerca de la seguridad, *locale* [localización (idioma, moneda, hora, etc.)] e información personal.
 Personal | *Security & Access* [Seguridad y acceso] | *Locale* [Localización]
---- | --- | ---
+:--- | :--- | :---
 *Name* [Nombre] | *Username* [Nombre de usuario] | *Time Zone* [Zona horaria]
 Alias | *License(s)* [Licencia(s)] | *Locale* [Localización]
 Email | *Profile* [Perfil] | *Language* [Idioma]
@@ -413,3 +420,56 @@ La desactivación:
 - Previene que el usuario acceda a nuestra organización de Salesforce
 - Libera una *user license* [licencia de usuario]
 
+## Ver el User's Login History [Histórico de Login de un Usuario]
+La *Login History Related List* [lista relacionada del histórico de login] del registro de un *user* [usuario] muestra cuándo, dónde y cómo intenta loguearse un usuario. Utiliza la columna *Status* [Estado] para diagnosticar cualquier problema con el login. Si no hay ningún registro aquí que muestre el intento de loguearse de un usuario, el usuario probablemente esté utilizando un *username* [nombre de usuario] incorrecto.
+
+```
+Setup | Manage Users | Users | Name of User
+Setup | Manage Users | Login history
+```
+
+## Lidiar con un Invalid Password [Contraseña incorrecta]
+Es buena práctica permitir que los usuarios reinicien sus contraseñas haciendo click en el enlace *"Forgot your password?"* ["Olvidaste tu contraseña?"] en la página de login. Si continúan sin poder acceder, puedes reiniciarles la contraseña de forma manual.
+
+```
+Setup | Manage Users | Users
+```
+
+## Confirmar Security Setting [Configuraciones de Seguridad]
+Un *Password Lockout* [bloqueo de contraseña] ocurre cuando tienes una *password policy* [política de contraseñas] que bloquea usuarios que exceden un cierto número de intentos de login erróneos. El período de bloqueo puede ser temporal o puede requerir un *admin reset* [reinicio manual por parte de un administrador]. Puedes desbloquear a un usuario haciendo click en **_Unlock_** en el registro del usuario.
+
+```
+Setup | Security Controls | Password Policies
+```
+
+## Profiles [Perfiles]
+Un *profile* [perfil] es una coleccion de *settings* [configuraciones] y *permissions* [permisos] que determinan qué pueden ver los usuarios en la interfaz, y qué pueden hacer.
+Settings (lo que los usuarios ven) | Permissions (lo que los usuarios pueden hacer)
+--- | ---
+Apps | *Administrative* [Administrativo] (p.ej.: personalizar una app)
+*Tabs* [Pestañas] | *General User* (p.ej.: realizar reportes, enviar emails)
+*Record Types* [Tipos de registro] | *Standard Object* [Objeto Estándar] (p.ej.: crear *leads* [usuarios potenciales])
+*Page Layouts* [Diseños de página] | *Custom Object* [Objeto Personalizado] (p.ej.: editar campos)
+*Fields* [Campos] | 
+
+## Cómo cambia la experiencia de un usuario con un Profile [Perfil]
+- Qué *tabs* [pestañas] son visibles
+- Qué Apps son visibles
+- Qué pueden hacer con registros de un objeto concreto
+- Qué campos son visibles
+- Qué campos son editables
+- El diseño de la página
+
+## Standard Profiles [Perfiles Estándar]
+Los *standard profiles* [perfiles estándar] no pueden ser eliminados y sus permisos no pueden ser editados.
+
+*Standard Profile* [Pefil Estándar] | *Permissions* [Permisos]
+--- | ---
+*System Administrator* [Administrador de sistema] | Ver y modificar todos los datos, personalizar app
+*Standard User* [Usuario Estándar] | Ver, editar y eliminar los registros que pueden acceder
+*Solution Manager* [Manager de Soluciones] | *Standard User* + puede gestionar Soluciones publicadas
+*Marketing User* [Usuario de Marketing] | *Standard User* + importar *Leads* [clientes potenciales]
+*Contract Manager* [Manager de contratos] | *Standard User* + gestionar Contracts
+*Read Only* [Sólo lectura] | Únicamente puede ver registros que pueden acceder
+
+## Standard Chatter Profiles [Perfiles Estándar de Chatter]
