@@ -34,6 +34,11 @@
     - [Lookup Relationship [Relación Lookup] y Master Detail relationship [Relación maestro esclavo]](#Lookup-Relationship-Relación-Lookup-y-Master-Detail-relationship-Relación-maestro-esclavo)
     - [Many-to-Many Relationship [Relación Muchos-a-Muchos]](#Many-to-Many-Relationship-Relación-Muchos-a-Muchos)
     - [Revisión del Modelo de Datos](#Revisión-del-Modelo-de-Datos)
+3. [🚨 Modelo de Seguridad de Salesforce](#🚨-Modelo-de-Seguridad-de-Salesforce)
+    - [Security Levels [Niveles de Seguridad]](#Security-Levels-Niveles-de-Seguridad)
+    - [Users [Usuarios]](#Users-Usuarios)
+    - [Crear nuevos Users [Usuarios]](#Crear-nuevos-Users-Usuarios)
+    - [Desactivar un User [Usuario]](#Desactivar-un-User-Usuario)
 
 # 🧭 Planteamiento
 ## Fecha examen 
@@ -362,3 +367,49 @@ Attributes [Atributos] | Lookup | Master Detail
     - *Bussiness Process* [Proceso de negocio]
 - *Master-Detail Relationship* [Relación Maestro-Esclavo]
 - *Many-to-Many Relationship* [Relación Muchos-a-Muchos]
+
+# 🚨 Modelo de Seguridad de Salesforce
+
+## Security Levels [Niveles de Seguridad]
+*Organization* [Organización] &rarr; *Object* [Objeto] &rarr; *Record* [Registro] &rarr; *Field* [Campo]
+
+```
++- Organization ----------------+
+|                               |
+|  +- Object ----------------+  |
+|  |                         |  |
+|  |  +- Record ----------+  |  |
+|  |  |                   |  |  |
+|  |  |  +- Field -----+  |  |  |
+|  |  |  |             |  |  |  |
+|  |  |  +-------------+  |  |  |
+|  |  +-------------------+  |  |
+|  +-------------------------+  |
++-------------------------------+
+```
+
+## Users [Usuarios]
+Un usuario es alguien con *login access* [acceso mediante login] a la *Salesforce organization* [la organización de Salesforce], que tiene una licencia y un *user record* [registro de usuario] que contiene información acerca de la seguridad, *locale* [localización (idioma, moneda, hora, etc.)] e información personal.
+Personal | *Security & Access* [Seguridad y acceso] | *Locale* [Localización]
+--- | --- | ---
+*Name* [Nombre] | *Username* [Nombre de usuario] | *Time Zone* [Zona horaria]
+Alias | *License(s)* [Licencia(s)] | *Locale* [Localización]
+Email | *Profile* [Perfil] | *Language* [Idioma]
+*Phone/Address* [Teléfono/Dirección] | *Role* [Rol] | *Currency* [Moneda]
+*Title* [Título] | *Login History* [Histórico de login]
+
+```
+Setup | Manage Users | Users
+```
+
+## Crear nuevos Users [Usuarios]
+Puedes crear uno o varios usuarios con únicamente la información requerida. La opción *Generate new password* [Generar nueva contraseña], seleccionada por defecto, enviará un email al usuario con el *username* [nombre de usuario] y una *temporary password* [contraseña temporal].
+
+## Desactivar un User [Usuario]
+Los registros de *Users* [Usuarios] **no pueden ser eliminados**, pero pueden ser desactivados.
+
+La desactivación:
+- Mantiene la integridad del histórico (se mantiene el registro de lo que hizo ese usuario)
+- Previene que el usuario acceda a nuestra organización de Salesforce
+- Libera una *user license* [licencia de usuario]
+
